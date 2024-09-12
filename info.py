@@ -16,7 +16,7 @@ def is_valid_ip(ip):
     ip_pattern = r'\b(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b'
     return re.match(ip_pattern, ip) is not None
 
-#main variables
+# main variables
 API_ID = int(environ.get('API_ID', ''))
 API_HASH = environ.get('API_HASH', '')
 BOT_TOKEN = environ.get('BOT_TOKEN', '')
@@ -27,7 +27,6 @@ LOG_CHANNEL = int(environ.get('LOG_CHANNEL', '-1002183671823'))
 MOVIE_GROUP_LINK = environ.get('MOVIE_GROUP_LINK', 'https://t.me/n_flixmovie')
 CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHANNELS', '-1002233212878').split()]
 DATABASE_URI = environ.get('DATABASE_URI', "mongodb+srv://ayushpritysingh098:aSupnGDa6jslVDqd@cluster0.9r9gs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-
 DATABASE_NAME = environ.get('DATABASE_NAME', "TELEGRAM_BOT_INFO")
 COLLECTION_NAME = environ.get('COLLECTION_NAME', 'Telegram_files')
 LOG_API_CHANNEL = int(environ.get('LOG_API_CHANNEL', '-1002183671823'))
@@ -52,9 +51,9 @@ TWO_VERIFY_GAP = int(environ.get('TWO_VERIFY_GAP', "14400"))
 THREE_VERIFY_GAP = int(environ.get('THREE_VERIFY_GAP', "14400"))
 
 LANGUAGES = ["hindi", "english", "telugu", "tamil", "kannada", "malayalam", "bengali", "marathi", "gujarati", "punjabi"]
-QUALITIES = ["HdRip","web-dl" ,"bluray", "hdr", "fhd" , "240p", "360p", "480p", "540p", "720p", "960p", "1080p", "1440p", "2K", "2160p", "4k", "5K", "8K"]
-YEARS = [f'{i}' for i in range(2024 , 2002,-1 )]
-SEASONS = [f'season {i}'for i in range (1 , 23)]
+QUALITIES = ["HdRip", "web-dl", "bluray", "hdr", "fhd", "240p", "360p", "480p", "540p", "720p", "960p", "1080p", "1440p", "2K", "2160p", "4k", "5K", "8K"]
+YEARS = [f'{i}' for i in range(2024, 2002, -1)]
+SEASONS = [f'season {i}' for i in range(1, 23)]
 REF_PREMIUM = 30
 PREMIUM_POINT = 1500
 auth_channel = environ.get('AUTH_CHANNEL', '-1002233212878')
@@ -78,34 +77,32 @@ PROTECT_CONTENT = is_enabled('PROTECT_CONTENT', False)
 SPELL_CHECK = is_enabled('SPELL_CHECK', True)
 LINK_MODE = is_enabled('LINK_MODE', True)
 SETTINGS = {
-            'spell_check': SPELL_CHECK,
-            'auto_filter': AUTO_FILTER,
-            'file_secure': PROTECT_CONTENT,
-            'auto_delete': AUTO_DELETE,
-            'template': IMDB_TEMPLATE,
-            'caption': FILE_CAPTION,
-            'tutorial': TUTORIAL,
-            'shortner': SHORTENER_WEBSITE,
-            'api': SHORTENER_API,
-            'shortner_two': SHORTENER_WEBSITE2,
-            'api_two': SHORTENER_API2,
-            'log': LOG_VR_CHANNEL,
-            'imdb': IMDB,
-            'link': LINK_MODE, 
-            'is_verify': IS_VERIFY, 
-            'verify_time': TWO_VERIFY_GAP,
-            'shortner_three': SHORTENER_WEBSITE3,
-            'api_three': SHORTENER_API3,
-            'third_verify_time': THREE_VERIFY_GAP
-    }
+    'spell_check': SPELL_CHECK,
+    'auto_filter': AUTO_FILTER,
+    'file_secure': PROTECT_CONTENT,
+    'auto_delete': AUTO_DELETE,
+    'template': IMDB_TEMPLATE,
+    'caption': FILE_CAPTION,
+    'tutorial': TUTORIAL,
+    'shortner': SHORTENER_WEBSITE,
+    'api': SHORTENER_API,
+    'shortner_two': SHORTENER_WEBSITE2,
+    'api_two': SHORTENER_API2,
+    'log': LOG_VR_CHANNEL,
+    'imdb': IMDB,
+    'link': LINK_MODE,
+    'is_verify': IS_VERIFY,
+    'verify_time': TWO_VERIFY_GAP,
+    'shortner_three': SHORTENER_WEBSITE3,
+    'api_three': SHORTENER_API3,
+    'third_verify_time': THREE_VERIFY_GAP
+}
 DEFAULT_POST_MODE = {
-    'singel_post_mode' : False,
-    'all_files_post_mode' : False
-
+    'singel_post_mode': False,
+    'all_files_post_mode': False
 }
 
-
-# for stream
+# For stream
 IS_STREAM = is_enabled('IS_STREAM', True)
 BIN_CHANNEL = environ.get("BIN_CHANNEL", "-1002237538640")
 if len(BIN_CHANNEL) == 0:
@@ -113,6 +110,8 @@ if len(BIN_CHANNEL) == 0:
     exit()
 else:
     BIN_CHANNEL = int(BIN_CHANNEL)
+
+# URL validation and fixing
 URL = environ.get("URL", "https://t.me/+kP4LSVcocBVhZjc1")
 if len(URL) == 0:
     print('Error - URL is missing, exiting now')
@@ -124,5 +123,5 @@ else:
     elif is_valid_ip(URL):
         URL = f'http://{URL}/'
     else:
-        print('Error - URL is not valid, exiting now')
+        print(f"Error - URL '{URL}' is not valid, exiting now")
         exit()
