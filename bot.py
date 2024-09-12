@@ -47,7 +47,7 @@ class Bot(Client):
         now = datetime.datetime.now(tz)
         timee = now.strftime("%H:%M:%S %p") 
         # Using web_app from web module
-        app = web.AppRunner(await web_app())
+        app = web.AppRunner(web_app())  # Removed 'await'
         await app.setup()
         bind_address = "0.0.0.0"
         await web.TCPSite(app, bind_address, PORT).start()
