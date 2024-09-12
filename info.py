@@ -12,6 +12,10 @@ def is_enabled(value, default):
     else:
         return default
 
+def is_valid_ip(ip):
+    ip_pattern = r'\b(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b'
+    return re.match(ip_pattern, ip) is not None
+
 #main variables
 API_ID = int(environ.get('API_ID', ''))
 API_HASH = environ.get('API_HASH', '')
