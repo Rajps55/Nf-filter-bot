@@ -32,10 +32,10 @@ async def telegraph(bot, message):
     await msg.delete()
     await message.reply_photo(
         photo=f'https://graph.org{response[0]}',
-        caption=f"<b>ʏᴏᴜʀ ᴛᴇʟᴇɢʀᴀᴘʜ ʟɪɴᴋ ᴄᴏᴍᴘʟᴇᴛᴇᴅ 👇</b>\n\n<code>https://graph.org{response[0]}</code>\n\n<b>ᴘᴏᴡᴇʀᴇᴅ ʙʏ - @bisal_files</b>",       
+        caption=f"<b>ʏᴏᴜʀ ᴛᴇʟᴇɢʀᴀᴘʜ ʟɪɴᴋ ᴄᴏᴍᴘʟᴇᴛᴇᴅ 👇</b>\n\n<code>https://graph.org{response[0]}</code>\n\n<b>ᴘᴏᴡᴇʀᴇᴅ ʙʏ - @n_flixmovie</b>",       
         reply_markup=InlineKeyboardMarkup( [[
-            InlineKeyboardButton(text="✓ ᴏᴘᴇɴ ʟɪɴᴋ ✓", url=f"https://graph.org{response[0]}"),
-            InlineKeyboardButton(text="📱 sʜᴀʀᴇ ʟɪɴᴋ", url=f"https://telegram.me/share/url?url=https://graph.org{response[0]}")
+            InlineKeyboardButton(text="✓ ᴏᴘᴇɴ ʟɪɴᴋ ✓", url=f"https://i.postimg.cc{response[0]}"),
+            InlineKeyboardButton(text="📱 sʜᴀʀᴇ ʟɪɴᴋ", url=f"https://telegram.me/share/url?url=https://i.postimg.cc{response[0]}")
             ],[
             InlineKeyboardButton(text="❌ ᴄʟᴏsᴇ ❌", callback_data="close_data")
             ]])
