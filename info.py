@@ -98,7 +98,7 @@ DEFAULT_POST_MODE = {
     'singel_post_mode' : False,
     'all_files_post_mode' : False
 
-
+}
     # for stream
 IS_STREAM = is_enabled('IS_STREAM', True)
 BIN_CHANNEL = environ.get("BIN_CHANNEL", "-1002237538640")
@@ -120,4 +120,4 @@ else:
     else:
         print('Error - URL is not valid, exiting now')
         exit()
-}
+
