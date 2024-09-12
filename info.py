@@ -12,6 +12,10 @@ def is_enabled(value, default):
     else:
         return default
 
+def is_valid_ip(ip):
+    ip_pattern = r'\b(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b'
+    return re.match(ip_pattern, ip) is not None
+
 #main variables
 API_ID = int(environ.get('API_ID', ''))
 API_HASH = environ.get('API_HASH', '')
@@ -99,4 +103,26 @@ DEFAULT_POST_MODE = {
     'all_files_post_mode' : False
 
 }
-   
+
+
+# for stream
+IS_STREAM = is_enabled('IS_STREAM', True)
+BIN_CHANNEL = environ.get("BIN_CHANNEL", "-1002237538640")
+if len(BIN_CHANNEL) == 0:
+    print('Error - BIN_CHANNEL is missing, exiting now')
+    exit()
+else:
+    BIN_CHANNEL = int(BIN_CHANNEL)
+URL = environ.get("URL", "https://t.me/+kP4LSVcocBVhZjc1")
+if len(URL) == 0:
+    print('Error - URL is missing, exiting now')
+    exit()
+else:
+    if URL.startswith(('https://', 'http://')):
+        if not URL.endswith("/"):
+            URL += '/'
+    elif is_valid_ip(URL):
+        URL = f'http://{URL}/'
+    else:
+        print('Error - URL is not valid, exiting now')
+        exit()
