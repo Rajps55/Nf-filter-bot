@@ -1,8 +1,9 @@
+
 # Standard library imports
+import datetime
 import time
 import pytz
-from datetime import date, datetime  # Correct import for date and datetime
-
+from datetime import date, datetime
 # pyrogram imports
 from pyrogram import Client, types, __version__, filters
 from pyrogram.raw.all import layer
@@ -24,7 +25,6 @@ from database.users_chats_db import db
 from database.ia_filterdb import Media
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-
 
 class Bot(Client):
     def __init__(self):
@@ -50,6 +50,7 @@ class Bot(Client):
         temp.U_NAME = me.username
         temp.B_NAME = me.first_name
         temp.B_LINK = me.mention
+        temp.BOT = self  # Set the instance of Bot to temp.BOT
         self.username = '@' + me.username
         self.loop.create_task(check_expired_premium(self))
         print(f"{me.first_name} is started now ❤️")
