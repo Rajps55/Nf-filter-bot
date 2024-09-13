@@ -19,16 +19,18 @@ async def watch_handler(request):
     try:
         message_id = int(request.match_info['message_id'])
         return web.Response(text=await media_watch(message_id), content_type='text/html')
-    except:
-        return web.Response(text="<h1>Something went wrong</h1>", content_type='text/html')
+    except Exception as e :
+        print("error", e)
+        return web.Response(text= str(e) , content_type='text/html')
 
 @routes.get("/download/{message_id}")
 async def download_handler(request):
     try:
         message_id = int(request.match_info['message_id'])
         return await media_download(request, message_id)
-    except:
-        return web.Response(text="<h1>Something went wrong</h1>", content_type='text/html')
+    except Exception as e :
+        print("error", e)
+        return web.Response(text= str(e) , content_type='text/html')
         
 
 async def media_download(request, message_id: int):
