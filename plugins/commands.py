@@ -286,26 +286,28 @@ async def start(client:Client, message):
             await m.delete()
             return
             
-    if data and data.startswith("allfiles"):
-        _, key = data.split("_", 1)
-        files = temp.FILES_ID.get(key)
+    if mc.startswith('all'):
+        _, grp_id, key = mc.split("_", 2)
+        files = temp.FILES.get(key)
         if not files:
-            await message.reply_text("<b>⚠️ ᴀʟʟ ꜰɪʟᴇs ɴᴏᴛ ꜰᴏᴜɴᴅ ⚠️</b>")
-            return
-        files_to_delete = []
+            return await message.reply('No Such All Files Exist!')
+        settings = await get_settings(int(grp_id))
         for file in files:
-            user_id = message.from_user.id 
-            grp_id = temp.CHAT.get(user_id)
-            settings = await get_settings(grp_id, pm_mode=pm_mode)
             CAPTION = settings['caption']
             f_caption = CAPTION.format(
-                file_name=formate_file_name(file.file_name),
-                file_size=get_size(file.file_size),
+                file_name = file.file_name,
+                file_size = get_size(file.file_size),
                 file_caption=file.caption
+            CAPTION = settings['caption']
+            f_caption = CAPTION.format(
+                file_name = files.file_name,
+                file_size = get_size(files.file_size),
+                file_caption=files.caption
             )
-            btn = [[
-                InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f'stream#{file.file_id}')
-            ]]
+            if settings.get('is_stream', IS_STREAM):
+        btn = [[
+            InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file_id}")
+        ]]
             toDel = await client.send_cached_media(
                 chat_id=message.from_user.id,
                 file_id=file.file_id,
@@ -337,15 +339,7 @@ async def start(client:Client, message):
         return await message.reply('<b>⚠️ ᴀʟʟ ꜰɪʟᴇs ɴᴏᴛ ꜰᴏᴜɴᴅ ⚠️</b>')
     files = files_[0]
     settings = await get_settings(grp_id , pm_mode=pm_mode)
-    CAPTION = settings['caption']
-    f_caption = CAPTION.format(
-        file_name = formate_file_name(files.file_name),
-        file_size = get_size(files.file_size),
-        file_caption=files.caption
-    )
-    btn = [[
-        InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f'stream#{file_id}')
-    ]]
+    
     toDel=await client.send_cached_media(
         chat_id=message.from_user.id,
         file_id=file_id,
@@ -369,6 +363,16 @@ async def delete(bot, message):
     """Delete file from database"""
     reply = message.reply_to_message
     if reply and reply.media:
+     CAPTION = settings['caption']
+     f_caption = CAPTION.format(
+        file_name = files.file_name,
+        file_size = get_size(files.file_size),
+        file_caption=files.caption
+    )
+    if settings.get('is_stream', IS_STREAM):
+        btn = [[
+            InlineKeyboardButton("✛ ᴡᴀᴛᴄʜ & ᴅᴏᴡɴʟᴏᴀᴅ ✛", callback_data=f"stream#{file_id}")
+        ]]
         msg = await message.reply("ᴘʀᴏᴄᴇssɪɴɢ...⏳", quote=True)
     else:
         await message.reply('Reply to file with /delete which you want to delete', quote=True)
