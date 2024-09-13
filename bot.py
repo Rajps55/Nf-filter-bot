@@ -50,22 +50,21 @@ class Bot(Client):
         temp.U_NAME = me.username
         temp.B_NAME = me.first_name
         temp.B_LINK = me.mention
-        temp.BOT = self  # Set the instance of Bot to temp.BOT
         self.username = '@' + me.username
         self.loop.create_task(check_expired_premium(self))
         print(f"{me.first_name} is started now ❤️")
         tz = pytz.timezone('Asia/Kolkata')
         today = date.today()
-        now = datetime.now(tz)
+        now = datetime.datetime.now(tz)
         timee = now.strftime("%H:%M:%S %p") 
-        # Using web_app from web module
-        app = web.AppRunner(web_app())  # Removed 'await'
+        app = web.AppRunner(await web_server())
         await app.setup()
         bind_address = "0.0.0.0"
         await web.TCPSite(app, bind_address, PORT).start()
         await self.send_message(chat_id=LOG_CHANNEL, text=f"<b>{me.mention} ʀᴇsᴛᴀʀᴛᴇᴅ 🤖\n\n📆 ᴅᴀᴛᴇ - <code>{today}</code>\n🕙 ᴛɪᴍᴇ - <code>{timee}</code>\n🌍 ᴛɪᴍᴇ ᴢᴏɴᴇ - <code>Asia/Kolkata</code></b>")
+        # await self.send_message(chat_id=SUPPORT_GROUP, text=f"<b>ʀᴀᴅʜᴇ ʀᴀᴅʜᴇ ᴇᴠᴇʀʏᴏɴᴇ 😚</b>")
         tt = time.time() - st
-        seconds = int(tt)
+        seconds = int(datetime.timedelta(seconds=tt).seconds)
         for admin in ADMINS:
             await self.send_message(chat_id=admin, text=f"<b>✅ ʙᴏᴛ ʀᴇsᴛᴀʀᴛᴇᴅ\n🕥 ᴛɪᴍᴇ ᴛᴀᴋᴇɴ - <code>{seconds} sᴇᴄᴏɴᴅs</code></b>")
 
@@ -83,6 +82,24 @@ class Bot(Client):
         This convenience method does the same as repeatedly calling :meth:`~pyrogram.Client.get_messages` in a loop, thus saving
         you from the hassle of setting up boilerplate code. It is useful for getting the whole chat messages with a
         single call.
+        Parameters:
+            chat_id (``int`` | ``str``):
+                Unique identifier (int) or username (str) of the target chat.
+                For your personal cloud (Saved Messages) you can simply use "me" or "self".
+                For a contact that exists in your Telegram address book you can use his phone number (str).
+                
+            limit (``int``):
+                Identifier of the last message to be returned.
+                
+            offset (``int``, *optional*):
+                Identifier of the first message to be returned.
+                Defaults to 0.
+        Returns:
+            ``Generator``: A generator yielding :obj:`~pyrogram.types.Message` objects.
+        Example:
+            .. code-block:: python
+                for message in app.iter_messages("pyrogram", 1, 15000):
+                    print(message.text)
         """
         current = offset
         while True:
