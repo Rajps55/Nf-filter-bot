@@ -1,19 +1,31 @@
-from pyrogram import Client, __version__, filters
-from pyrogram.raw.all import layer
-from database.ia_filterdb import Media
-from database.users_chats_db import db
-from info import API_ID, API_HASH, ADMINS, BOT_TOKEN, LOG_CHANNEL, PORT, SUPPORT_GROUP
-from utils import temp
-from typing import Union, Optional, AsyncGenerator
-from pyrogram import types
-from Script import script
-from datetime import date, datetime
+# Standard library imports
 import datetime
-import pytz
-from aiohttp import web
-from plugins import web_server, check_expired_premium
-from web import web_app  # Add this to import web_app from the web module
 import time
+import pytz
+from datetime import date, datetime
+from typing import Union, Optional, AsyncGenerator
+
+# pyrogram imports
+from pyrogram import Client, types, __version__, filters
+from pyrogram.raw.all import layer
+from pyrogram.errors import FloodWait
+
+# aiohttp imports
+from aiohttp import web
+
+# Local application imports
+from web import web_app
+from info import API_ID, API_HASH, BOT_TOKEN, LOG_CHANNEL, PORT, ADMINS, SUPPORT_GROUP
+from utils import temp
+from Script import script
+from plugins import web_server, check_expired_premium
+
+# pymongo and database imports
+from database.users_chats_db import db
+from database.ia_filterdb import Media
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+
 
 class Bot(Client):
     def __init__(self):
