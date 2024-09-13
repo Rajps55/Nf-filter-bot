@@ -3,8 +3,6 @@ import datetime
 import time
 import pytz
 from datetime import date, datetime
-from typing import Union, Optional, AsyncGenerator
-
 # pyrogram imports
 from pyrogram import Client, types, __version__, filters
 from pyrogram.raw.all import layer
@@ -12,6 +10,8 @@ from pyrogram.errors import FloodWait
 
 # aiohttp imports
 from aiohttp import web
+from typing import Union, Optional, AsyncGenerator
+
 
 # Local application imports
 from web import web_app
