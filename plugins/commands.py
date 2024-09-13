@@ -295,11 +295,6 @@ async def start(client:Client, message):
         for file in files:
             CAPTION = settings['caption']
             f_caption = CAPTION.format(
-                file_name = file.file_name,
-                file_size = get_size(file.file_size),
-                file_caption=file.caption
-            CAPTION = settings['caption']
-            f_caption = CAPTION.format(
                 file_name = files.file_name,
                 file_size = get_size(files.file_size),
                 file_caption=files.caption
