@@ -1,8 +1,8 @@
 # Standard library imports
-import datetime
 import time
 import pytz
-from datetime import date, datetime
+from datetime import date, datetime  # Correct import for date and datetime
+
 # pyrogram imports
 from pyrogram import Client, types, __version__, filters
 from pyrogram.raw.all import layer
@@ -11,7 +11,6 @@ from pyrogram.errors import FloodWait
 # aiohttp imports
 from aiohttp import web
 from typing import Union, Optional, AsyncGenerator
-
 
 # Local application imports
 from web import web_app
@@ -56,7 +55,7 @@ class Bot(Client):
         print(f"{me.first_name} is started now ❤️")
         tz = pytz.timezone('Asia/Kolkata')
         today = date.today()
-        now = datetime.datetime.now(tz)
+        now = datetime.now(tz)
         timee = now.strftime("%H:%M:%S %p") 
         # Using web_app from web module
         app = web.AppRunner(web_app())  # Removed 'await'
@@ -65,7 +64,7 @@ class Bot(Client):
         await web.TCPSite(app, bind_address, PORT).start()
         await self.send_message(chat_id=LOG_CHANNEL, text=f"<b>{me.mention} ʀᴇsᴛᴀʀᴛᴇᴅ 🤖\n\n📆 ᴅᴀᴛᴇ - <code>{today}</code>\n🕙 ᴛɪᴍᴇ - <code>{timee}</code>\n🌍 ᴛɪᴍᴇ ᴢᴏɴᴇ - <code>Asia/Kolkata</code></b>")
         tt = time.time() - st
-        seconds = int(datetime.timedelta(seconds=tt).seconds)
+        seconds = int(tt)
         for admin in ADMINS:
             await self.send_message(chat_id=admin, text=f"<b>✅ ʙᴏᴛ ʀᴇsᴛᴀʀᴛᴇᴅ\n🕥 ᴛɪᴍᴇ ᴛᴀᴋᴇɴ - <code>{seconds} sᴇᴄᴏɴᴅs</code></b>")
 
