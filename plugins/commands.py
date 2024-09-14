@@ -712,6 +712,7 @@ async def set_shortner_2(c, m):
 async def set_log(client, message):
     grp_id = message.chat.id
     title = message.chat.title
+    chat_type = message.chat.type  # chat_type को यहां असाइन किया गया
     if chat_type not in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         return await message.reply_text("<b>ᴜꜱᴇ ᴛʜɪꜱ ᴄᴏᴍᴍᴀɴᴅ ɪɴ ɢʀᴏᴜᴘ...</b>")
     if not await is_check_admin(client, grp_id, message.from_user.id):
@@ -722,7 +723,6 @@ async def set_log(client, message):
     sts = await message.reply("<b>♻️ ᴄʜᴇᴄᴋɪɴɢ...</b>")
     await asyncio.sleep(1.2)
     await sts.delete()
-    chat_type = message.chat.type
     try:
         log = int(message.text.split(" ", 1)[1])
     except IndexError:
@@ -742,7 +742,7 @@ async def set_log(client, message):
     link = (await client.get_chat(message.chat.id)).invite_link
     grp_link = f"[{message.chat.title}]({link})"
     log_message = f"#New_Log_Channel_Set\n\nName - {user_info}\nId - `{user_id}`\n\nLog channel id - `{log}`\nGroup link - {grp_link}"
-    await client.send_message(LOG_API_CHANNEL, log_message, disable_web_page_preview=True)  
+    await client.send_message(LOG_API_CHANNEL, log_message, disable_web_page_preview=True)
 
 @Client.on_message(filters.command('details'))
 async def all_settings(client, message):
