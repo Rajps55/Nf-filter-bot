@@ -712,48 +712,37 @@ async def set_shortner_2(c, m):
 async def set_log(client, message):
     grp_id = message.chat.id
     title = message.chat.title
-    chat_type = message.chat.type
     if chat_type not in [enums.ChatType.GROUP, enums.ChatType.SUPERGROUP]:
         return await message.reply_text("<b>ᴜꜱᴇ ᴛʜɪꜱ ᴄᴏᴍᴍᴀɴᴅ ɪɴ ɢʀᴏᴜᴘ...</b>")
     if not await is_check_admin(client, grp_id, message.from_user.id):
-        return await message.reply_text('<b>ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴀᴅᴍɪɴ ɪɴ ᴛʜɪs ɢʀᴏᴜᴘ</b>')
+        return await message.reply_text('<b>ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴀᴅᴍɪɴ ɪɴ ᴛʜɪꜱ ɢʀᴏᴜᴘ</b>')
     if len(message.text.split()) == 1:
         await message.reply("<b>Use this command like this - \n\n`/set_log_channel -100******`</b>")
         return
     sts = await message.reply("<b>♻️ ᴄʜᴇᴄᴋɪɴɢ...</b>")
     await asyncio.sleep(1.2)
     await sts.delete()
-    
-    # Ensure chat_type is assigned before usage
     chat_type = message.chat.type
     try:
         log = int(message.text.split(" ", 1)[1])
     except IndexError:
-        return await message.reply_text("<b><u>ɪɴᴠᴀʟɪᴅ ꜰᴏʀᴍᴀᴛ!!</u>\n\nᴜse like this - `/set_log_channel -100xxxxxxxx`</b>")
+        return await message.reply_text("<b><u>ɪɴᴠᴀɪʟᴅ ꜰᴏʀᴍᴀᴛ!!</u>\n\nᴜsᴇ ʟɪᴋᴇ ᴛʜɪs - `/set_log_channel -100xxxxxxxx`</b>")
     except ValueError:
-        return await message.reply_text('<b>Ensure the ID is an integer...</b>')
-    
+        return await message.reply_text('<b>ᴍᴀᴋᴇ sᴜʀᴇ ɪᴅ ɪs ɪɴᴛᴇɢᴇʀ...</b>')
     try:
         t = await client.send_message(chat_id=log, text="<b>ʜᴇʏ ᴡʜᴀᴛ's ᴜᴘ!!</b>")
         await asyncio.sleep(3)
         await t.delete()
     except Exception as e:
-        return await message.reply_text(f'<b><u>Ensure this bot is admin in that channel...</u>\n\n💔 Error - <code>{e}</code></b>')
-    
+        return await message.reply_text(f'<b><u>😐 ᴍᴀᴋᴇ sᴜʀᴇ ᴛʜɪs ʙᴏᴛ ᴀᴅᴍɪɴ ɪɴ ᴛʜᴀᴛ ᴄʜᴀɴɴᴇʟ...</u>\n\n💔 ᴇʀʀᴏʀ - <code>{e}</code></b>')
     await save_group_settings(grp_id, 'log', log)
-    
-    # Only edit if there's a difference
-    old_text = await client.get_messages(message.chat.id, message.message_id)
-    new_text = f"<b>✅ Log channel set for {title}\n\nID - `{log}`</b>"
-    if old_text.text != new_text:
-        await message.edit_text(new_text, disable_web_page_preview=True)
-
+    await message.reply_text(f"<b>✅ sᴜᴄᴄᴇssꜰᴜʟʟʏ sᴇᴛ ʏᴏᴜʀ ʟᴏɢ ᴄʜᴀɴɴᴇʟ ꜰᴏʀ {title}\n\nɪᴅ - `{log}`</b>", disable_web_page_preview=True)
     user_id = message.from_user.id
     user_info = f"@{message.from_user.username}" if message.from_user.username else f"{message.from_user.mention}"
     link = (await client.get_chat(message.chat.id)).invite_link
     grp_link = f"[{message.chat.title}]({link})"
-    log_message = f"#New_Log_Channel_Set\n\nName - {user_info}\nID - `{user_id}`\n\nLog channel ID - `{log}`\nGroup link - {grp_link}"
-    await client.send_message(LOG_API_CHANNEL, log_message, disable_web_page_preview=True)
+    log_message = f"#New_Log_Channel_Set\n\nName - {user_info}\nId - `{user_id}`\n\nLog channel id - `{log}`\nGroup link - {grp_link}"
+    await client.send_message(LOG_API_CHANNEL, log_message, disable_web_page_preview=True)  
 
 @Client.on_message(filters.command('details'))
 async def all_settings(client, message):
